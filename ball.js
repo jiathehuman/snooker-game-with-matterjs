@@ -14,7 +14,7 @@ function Ball(x, y, r, color)
     this.originaly = y
 
     this.body = Bodies.circle(x, y, r, options);
-    this.label = "ball";
+    this.body.label = "ball"; // overrides label
     this.r = r;
     World.add(engine.world, this.body);
 

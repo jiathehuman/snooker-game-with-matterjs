@@ -5,7 +5,7 @@
 var mouseConstraint;
 
 //aliasing with Coding train
-const {Engine, World, Bodies, Body, Mouse, MouseConstraint, Constraint, Composites, Composite} = Matter;
+const {Engine, World, Bodies, Body, Mouse, MouseConstraint, Constraint, Composites, Composite, Events} = Matter;
 
 var engine;
 var cueBall;
@@ -26,74 +26,31 @@ function setup()
 
     ball_diameter = width/36;
 
-    // for(var i = 0; i < 3; i++)
-    // {
-    //     fill(0)
-    //     ellipse(i*width/2,0,ball_diameter*1.5,ball_diameter*1.5)
-    //     ellipse(i*width/2,height,ball_diameter*1.5,ball_diameter*1.5)
-    // }  
-
     redBalls = [];
     colouredBalls = []
     boundaries = [];
     pockets = [];
-    // for(var i = 0; i < 3; i++)
-    // {
-    //     ellipse(i*width/2,0,ball_diameter*1.5,ball_diameter*1.5)
-    //     ellipse(i*width/2,height,ball_diameter*1.5,ball_diameter*1.5)
-    // }  
-    for(var i = 0; i < 3; i++)
-    {
-        p1 = new Pocket(i*width/2,0, ball_diameter*1.5)
-        p2 = new Pocket(i*width/2,height,ball_diameter*1.5)
-        pockets.push(p1,p2)
-    }  
-    // boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
-    // boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
-    // boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
-    // boundaries.push(new Boundary(width/2,height,width,20)); // bottom boundary
 
-
-    // for(var j = 0; j < 5; j++) // columns
-    // {
-    //     var x = width*0.8 + j * ball_diameter // each column
-    //     var starty = height/2 - j * ball_diameter/2
-
-    //     var numBalls = j + 1;
-
-    //     for(var i = 0; i < numBalls; i++) //columns
-    //     {
-    //         y = starty + i * ball_diameter
-    //         ball = new Ball(x,y,ball_diameter/2,'red')
-    //         redBalls.push(ball)
-    //     }
-    // }
-
-    // colouredBalls.push(new Ball(width* 0.8 - ball_diameter, height/2,ball_diameter/2,'pink'))
-    // colouredBalls.push(new Ball(width/5, height/2 - 2.5*ball_diameter,ball_diameter/2,'green'))
-    // colouredBalls.push(new Ball(width/5, height/2,ball_diameter/2,'brown'))
-    // colouredBalls.push(new Ball(width/5, height/2 + 2.5*ball_diameter,ball_diameter/2,'yellow'))
-    // colouredBalls.push(new Ball(width/2, height/2,ball_diameter/2,'blue'))
-    // colouredBalls.push(new Ball(width - 2 * ball_diameter, height/2,ball_diameter/2,'black'))
-
-
-    // for(var i = 0; i < 16; i++)
-    // {
-    //     redBalls.push(new Ball(width/2,height/2 +i*ball_diameter + ball_diameter, ball_diameter/2));
-    // }
 
     cueBall = new CueBall(width/2,height/2,ball_diameter/2)
     cue = new Cue(width/2,100,10,200);
 
-    // var mouse = Mouse.create(canvas.elt);
-    // var options =
-    // {
-    //     mouse: mouse
-    // }
-    // mouse.pixelRatio = pixelDensity()
-    // mConstraint = MouseConstraint.create(engine, options)
-    // World.add(engine.world, mConstraint);
-    rectMode(CENTER)
+
+    //https://www.youtube.com/watch?v=CdBXmsrkaPs&list=PLRqwX-V7Uu6bLh3T_4wtrmVHOrOEM1ig_&index=9
+    function collision(event)
+    {
+        var pairs = event.pairs;
+        for(var i = 0; i < pairs.length; i++)
+        {
+            var bodyA = pairs[i].bodyA;
+            var bodyB = pairs[i].bodyB;
+            // console.log(bodyA.label,bodyB.label);
+        }
+        console.log(event)
+    }
+    Events.on(engine, 'collisionStart', collision);
+
+   rectMode(CENTER)
 
 
 
@@ -138,7 +95,7 @@ function draw()
     // }  
     for(var i = 0; i < pockets.length; i++)
     {
-        pockets[i].display()
+        pockets[i].show();
     }
 
 

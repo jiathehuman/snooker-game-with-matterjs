@@ -10,7 +10,7 @@ function Boundary(x, y, w, h)
     }
 
     this.body = Bodies.rectangle(x, y, w, h,options);
-    this.label = "boundary";
+    this.body.label = "boundary"; // overrides label
     World.add(engine.world, this.body);
 
     this.show = function()

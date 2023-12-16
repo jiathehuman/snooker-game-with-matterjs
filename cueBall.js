@@ -11,7 +11,7 @@ function CueBall(x, y, r)
     }
 
     this.body = Bodies.circle(x, y, r, options);
-    this.label = "cueBall";
+    this.body.label = "cueBall"; // overrides label
     this.r = r
     World.add(engine.world, this.body);
 

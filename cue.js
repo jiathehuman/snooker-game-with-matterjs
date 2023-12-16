@@ -6,6 +6,7 @@ function Cue(x, y, w, h)
     var options = {
         friction:0.1,
         restitution: 1,
+        // collisionFilter: {mask:redCategory},
         isStatic: false
     }
 

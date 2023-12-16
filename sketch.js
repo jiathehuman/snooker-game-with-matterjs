@@ -2,7 +2,7 @@
 // var World = Matter.World;
 // var Bodies = Matter.Bodies;
 // var Body = Matter.Body;
-// var mouseConstraint;
+var mouseConstraint;
 
 //aliasing with Coding train
 const {Engine, World, Bodies, Body, Mouse, MouseConstraint, Constraint, Composites, Composite} = Matter;
@@ -12,6 +12,7 @@ var cueBall;
 var walls;
 var redBalls;
 var backgroundisDrawn;
+var redCategory = 0x0002
 
 function setup() 
 {
@@ -27,6 +28,7 @@ function setup()
 
     // for(var i = 0; i < 3; i++)
     // {
+    //     fill(0)
     //     ellipse(i*width/2,0,ball_diameter*1.5,ball_diameter*1.5)
     //     ellipse(i*width/2,height,ball_diameter*1.5,ball_diameter*1.5)
     // }  
@@ -35,6 +37,17 @@ function setup()
     colouredBalls = []
     boundaries = [];
     pockets = [];
+    // for(var i = 0; i < 3; i++)
+    // {
+    //     ellipse(i*width/2,0,ball_diameter*1.5,ball_diameter*1.5)
+    //     ellipse(i*width/2,height,ball_diameter*1.5,ball_diameter*1.5)
+    // }  
+    for(var i = 0; i < 3; i++)
+    {
+        p1 = new Pocket(i*width/2,0, ball_diameter*1.5)
+        p2 = new Pocket(i*width/2,height,ball_diameter*1.5)
+        pockets.push(p1,p2)
+    }  
     // boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
     // boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
     // boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
@@ -72,15 +85,17 @@ function setup()
     cueBall = new CueBall(width/2,height/2,ball_diameter/2)
     cue = new Cue(width/2,100,10,200);
 
-    var mouse = Mouse.create(canvas.elt);
-    var options =
-    {
-        mouse: mouse
-    }
-    mouse.pixelRatio = pixelDensity()
-    mConstraint = MouseConstraint.create(engine, options)
-    World.add(engine.world, mConstraint);
+    // var mouse = Mouse.create(canvas.elt);
+    // var options =
+    // {
+    //     mouse: mouse
+    // }
+    // mouse.pixelRatio = pixelDensity()
+    // mConstraint = MouseConstraint.create(engine, options)
+    // World.add(engine.world, mConstraint);
     rectMode(CENTER)
+
+
 
     let buttonOne = createButton('Game Mode One');
     buttonOne.position(0, height)
@@ -88,16 +103,16 @@ function setup()
         gameModeOne()
     })
     let buttonTwo = createButton('Game Mode Two');
-    buttonTwo.position(200, height)
+    buttonTwo.position(0, height + 50)
     buttonTwo.mousePressed(()=>{
         gameModeTwo()
     })
-
-    let buttonThree = createButton('Remove all bodies');
-    buttonThree.position(300, height)
+    let buttonThree = createButton('Game Mode Three');
+    buttonThree.position(0, height+ 100)
     buttonThree.mousePressed(()=>{
-        removeAllBodies()
+        gameModeThree()
     })
+
 
 }
 
@@ -114,6 +129,17 @@ function draw()
 
     fill(0) 
     noStroke()
+
+    // for(var i = 0; i < 3; i++)
+    // {
+    //     fill(0)
+    //     ellipse(i*width/2,0,ball_diameter*1.5,ball_diameter*1.5)
+    //     ellipse(i*width/2,height,ball_diameter*1.5,ball_diameter*1.5)
+    // }  
+    for(var i = 0; i < pockets.length; i++)
+    {
+        pockets[i].display()
+    }
 
 
     // image(backgroundCanvas,0,0) 
@@ -134,9 +160,17 @@ function draw()
     cue.show()
     for(var i = 0; i < redBalls.length; i++){
         redBalls[i].show();
+        redBalls[i].checkPocketed();
+
     }
     for(var i = 0; i < colouredBalls.length; i++){
         colouredBalls[i].show();
+        if(colouredBalls[i].checkPocketed()){
+            console.log("it is true")
+            colouredBalls[i].returnToPosition();
+            // colouredBalls.splice(i,1)
+            // i--; // loop through array backwards
+        };
     }
 
 

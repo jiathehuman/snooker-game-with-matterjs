@@ -1,29 +1,45 @@
-function Pocket(x, y, d){
-    this.x = x;
-    this.y = y;
-
-    var options = {
-        friction:0.1,
-        restitution: 1,
-        isStatic: true
-    }
-
-    this.body = Bodies.circle(x, y, d/2, options);
-    this.body.label = "pocket"; // overrides label
-    World.add(engine.world, this.body);
-
-    this.show = function()
+function checkPocketed(x,y)
+{
+    if(dist(x,y,0,0) < ball_diameter + 10)
     {
-        var pos = this.body.position;
-        var angle = this.body.angle;
-
-        push();
-        translate(pos.x, pos.y);
-        // rotate(radians(angle));
-        fill(0);
-        ellipse(0,0,d);
-        pop();
-        // drawVertices(this.body.vertices);
-
+        // console.log("hit first pocket")
+        p1_count += 1
+        return("pocket1")
     }
+    else if(dist(x,y,width/2,0) < ball_diameter + 10)
+    {
+        // console.log("hit second pocket")
+        p2_count += 1
+        return("pocket2")
+    }
+    else if(dist(x,y,width,0) < ball_diameter + 10)
+    {
+        // console.log("hit third pocket")
+        p3_count+= 1
+        return("pocket3")
+    }
+    else if(dist(x,y,0,height) < ball_diameter + 10)
+    {
+        // console.log("hit fourth pocket")
+        p4_count+= 1
+        return("pocket4")
+    }
+    else if(dist(x,y,width/2,height) < ball_diameter + 10)
+    {
+        // console.log("hit fifth pocket")
+        p5_count+= 1
+        return("pocket5")
+    }
+    else if(dist(x,y,width,height) < ball_diameter + 10)
+    {
+        // console.log("hit sixth pocket")
+        p6_count+= 1
+        return("pocket6")
+    }
+    else{
+        return false;
+    }    
 }
+
+
+

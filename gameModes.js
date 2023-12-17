@@ -15,6 +15,7 @@
 function gameModeOne()
 {
     removeAllBodies()
+
     addMouseConstraint()
     boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
     boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
@@ -22,12 +23,12 @@ function gameModeOne()
     boundaries.push(new Boundary(width/2,height,width,20)); // bottom boundary
 
 
-    for(var i = 0; i < 3; i++)
-    {
-        p1 = new Pocket(i*width/2,0, ball_diameter*1.5)
-        p2 = new Pocket(i*width/2,height,ball_diameter*1.5)
-        pockets.push(p1,p2)
-    }  
+    // for(var i = 0; i < 3; i++)
+    // {
+    //     p1 = new Pocket(i*width/2,0, ball_diameter*1.5)
+    //     p2 = new Pocket(i*width/2,height,ball_diameter*1.5)
+    //     pockets.push(p1,p2)
+    // }  
     
 
     cue = new Cue(width/2,100,10,200);
@@ -66,12 +67,12 @@ function gameModeTwo()
     boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
     boundaries.push(new Boundary(width/2,height,width,20)); // bottom boundary
     
-    for(var i = 0; i < 3; i++)
-    {
-        p1 = new Pocket(i*width/2,0, ball_diameter*1.5)
-        p2 = new Pocket(i*width/2,height,ball_diameter*1.5)
-        pockets.push(p1,p2)
-    }  
+    // for(var i = 0; i < 3; i++)
+    // {
+    //     p1 = new Pocket(i*width/2,0, ball_diameter*1.5)
+    //     p2 = new Pocket(i*width/2,height,ball_diameter*1.5)
+    //     pockets.push(p1,p2)
+    // }  
 
     cue = new Cue(width/2,100,10,200);
     cueBall = new CueBall( 0 + 2* ball_diameter,0 + 2 * ball_diameter,ball_diameter/2)
@@ -94,12 +95,12 @@ function gameModeThree()
     boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
     boundaries.push(new Boundary(width/2,height,width,20)); // bottom boundary
 
-    for(var i = 0; i < 3; i++)
-    {
-        p1 = new Pocket(i*width/2,0, ball_diameter*1.5)
-        p2 = new Pocket(i*width/2,height,ball_diameter*1.5)
-        pockets.push(p1,p2)
-    }  
+    // for(var i = 0; i < 3; i++)
+    // {
+    //     p1 = new Pocket(i*width/2,0, ball_diameter*1.5)
+    //     p2 = new Pocket(i*width/2,height,ball_diameter*1.5)
+    //     pockets.push(p1,p2)
+    // }  
     
 
     cue = new Cue(width/2,100,10,200);

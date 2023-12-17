@@ -7,7 +7,8 @@ function CueBall(x, y, r)
     var options = {
         friction:0.1,
         restitution: 0.2,
-        isStatic: false
+        isStatic: false,
+        // collisionFilter: {category: redCategory | greenCategory}
     }
 
     this.body = Bodies.circle(x, y, r, options);

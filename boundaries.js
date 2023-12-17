@@ -6,7 +6,8 @@ function Boundary(x, y, w, h)
     var options = {
         friction:0.1,
         restitution: 1,
-        isStatic: true
+        isStatic: true,
+        // collisionFilter: {mask: redCategory}
     }
 
     this.body = Bodies.rectangle(x, y, w, h,options);

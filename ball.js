@@ -7,7 +7,9 @@ function Ball(x, y, r, color)
     var options = {
         friction:0.1,
         restitution: 1,
-        isStatic: false
+        isStatic: false,
+        // collisionFilter: {mask: redCategory}
+        // collisionFilter: {mask: greenCategory}
     }
 
     this.originalx = x
@@ -37,16 +39,37 @@ function Ball(x, y, r, color)
     this.checkPocketed = function()
     {
         var pos = this.body.position;
-        if(pos.x < 50)
-        {
-         return true;
+        // if(pos.x < 50)
+        // {
+        //  return true;
+        // }
+        var string = checkPocketed(pos.x,pos.y)
+        if(string != false){
+            // this.removeBall()
+            return true
         }
+        // console.log(number)
+        // World.remove(engine.world, this.body);
+
     }
-    this.returnToPosition = function()
+    this.removeBall = function()
     {
         // var pos = this.body.position;
         // pos.x = width/2
         // pos.y = height/2
-        Matter.Body.set(this.body, "position",{x: this.originalx, y: this.originaly})
+        // Matter.Body.set(this.body, "position",{x: this.originalx, y: this.originaly})
+        var obj = {
+            x: this.originalx,
+            y: this.originaly,
+            color: color,
+            options: options
+
+        }
+        World.remove(engine.world, this.body);
+        return obj
     }
+    // this.removeBall = function()
+    // {
+    //     World.remove(engine.world,this.body)
+    // }
 }

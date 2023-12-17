@@ -1,48 +1,45 @@
 function addMouseConstraint()
 {
+    var startdrag_x
+    var startdrag_y
+    var enddrag_x
+    var enddrag_y
+
     var mouse = Mouse.create(document.body),
     mouseConstraint = MouseConstraint.create(engine, {
         mouse: mouse,
-        // collisionFilter: {category:redCategory},
+        collisionFilter: {mask:redCategory},
         constraint: {
             stiffness: 0.2,
             render: {
                 visible: true
-            }
+            },
+            // collisionFilter:{category:redCategory}
         }
     });
     World.add(engine.world, mouseConstraint);
-    // console.log(mouseConstraint.collisionFilter.group)
-    // this.show()
-    // {
-    //     var pos = mConstraint.body.position;
-    //     var m = mConstraint.mouse.position;
-    //     stroke(0,255,0);
-    //     line(pos.x, pos.y, m.x, m.y)
-    // }
 
-    // var mouse = Mouse.create(canvas.elt),
-    //     mouseConstraint = MouseConstraint.create(engine, {
-    //         mouse: mouse,
-    //         // collisionFilter: redCategory,
-    //         constraint: {
-    //             stiffness: 0.2,
-    //             // collisionFilter: {mask: greenCategory | redCategory},
+    Events.on(mouseConstraint, 'startdrag', function(event) {
+        // console.log('mousedown', event);
+        // startdrag_x = event.mouse.position.x
+        // startdrag_y = event.mouse.position.y
+        // console.log(startdrag_x)
+    });
 
-    //             render: {
-    //                 visible: true
-    //             }
-    //         }
-    //     });
-    //     World.add(engine.world, mouseConstraint);
-    
-    // mouseConstraint.collisionFilter.mask = redCategory;
-    
-    // this.show()
-    // {
-    //     var pos = mConstraint.body.position;
-    //     var m = mConstraint.mouse.position;
-    //     stroke(0,255,0);
-    //     line(pos.x, pos.y, m.x, m.y)
-    // }
+    Events.on(mouseConstraint, 'enddrag', function(event) {
+        // console.log('mousedown', event);
+        // enddrag_x = event.mouse.position.x
+        // enddrag_y = event.mouse.position.y
+        // console.log(event.mouse.position)
+    });
+
+    // console.log(startdrag_x)
+
+
+    // var appliedForce_x = startdrag_x - enddrag_x
+    // var appliedForce_y = startdrag_y - enddrag_x
+
+    // var appliedForceVector = {x:appliedForce_x, y:appliedForce_y}
+    // Body.applyForce(cueBall,{x:cueBall.body.position.x,y:cueBall.body.position.y},appliedForceVector)
+
 }

@@ -89,7 +89,7 @@ function gameModeTwo()
 function gameModeThree()
 {
     removeAllBodies()
-    addMouseConstraint()
+    // addMouseConstraint()
     boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
     boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
     boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
@@ -103,7 +103,7 @@ function gameModeThree()
     // }  
     
 
-    cue = new Cue(width/2,100,10,200);
+    cue = new Cue(width/2,50,ball_diameter/2);
     cueBall = new CueBall( 0 + 2* ball_diameter,0 + 2 * ball_diameter,ball_diameter/2)
 
     for(var i = 0; i < 16; i++)

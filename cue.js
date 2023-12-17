@@ -1,17 +1,16 @@
-function Cue(x, y, w, h)
+function Cue(x, y, r)
 {
-    this.w = w;
-    this.h = h;
+
 
     var options = {
         friction:0.1,
-        restitution: 1,
-        collisionFilter: {category:redCategory},
+        restitution: 1, 
+        collisionFilter: {category:redCategory | greenCategory},
         isStatic: false,
         // collisionFilter: {mask: greenCategory}
     }
 
-    this.body = Bodies.rectangle(x, y, w, h,options);
+    this.body = Bodies.circle(x, y, r,options);
     this.label = "cue";
     World.add(engine.world, this.body);
 
@@ -32,8 +31,8 @@ function Cue(x, y, w, h)
         // rectMode(CENTER);
 
         stroke(0);
-        fill(0);
-        rect(0,0,this.w,this.h)
+        fill(255,255,0);
+        ellipse(0,0,r*2);
         pop();
     }
 

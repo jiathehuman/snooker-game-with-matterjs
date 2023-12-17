@@ -8,6 +8,7 @@ function Ball(x, y, r, color)
         friction:0.1,
         restitution: 1,
         isStatic: false,
+        collisionFilter: {category :blueCategory},
         // collisionFilter: {mask: redCategory}
         // collisionFilter: {mask: greenCategory}
     }

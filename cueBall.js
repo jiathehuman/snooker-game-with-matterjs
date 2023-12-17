@@ -7,8 +7,9 @@ function CueBall(x, y, r)
     var options = {
         friction:0.1,
         restitution: 0.2,
+        density: 10,
         isStatic: false,
-        // collisionFilter: {category: redCategory | greenCategory}
+        collisionFilter: {category:redCategory | greenCategory},
     }
 
     this.body = Bodies.circle(x, y, r, options);
@@ -28,6 +29,29 @@ function CueBall(x, y, r)
         ellipse(0,0,this.r*2);
         pop();
         // drawVertices(this.body.vertices);
-
     }
+
+    this.shootCueBall = function(appliedForce)
+    {
+        if(this.body.speed < 0.2){
+            Matter.Body.set(this.body, "velocity", appliedForce)
+        }
+    }
+
+    this.moveCueBall = function(mouse_x, mouse_y)
+    {
+        Matter.Body.set(this.body, "position",{x: mouse_x, y: mouse_y})
+    }
+
+    // this.checkBallSleeping = function()
+    // {
+    //     console.log(this.body.isSleeping)
+    //     // if(this.body.motion == 0)
+    //     // {
+    //     //     return true;
+    //     // }
+    //     // else{
+    //     //     console.log("ball is moving")
+    //     // }
+    // }
 }

@@ -2,10 +2,11 @@
 // var World = Matter.World;
 // var Bodies = Matter.Bodies;
 // var Body = Matter.Body;
-var mouseConstraint;
+
 
 //aliasing with Coding train
 const {Engine, World, Bodies, Body, Mouse, MouseConstraint, Query, Constraint, Composites, Composite, Events, Collision, Common} = Matter;
+
 
 var engine;
 var cueBall;
@@ -120,6 +121,7 @@ function draw()
 {
 
     Engine.update(engine);
+    // engine.enableSleeping = true;
 
     background(50,100,50);
         // markings on the pool table
@@ -204,6 +206,27 @@ function draw()
         p6_count = 0
     }
 
+    // if(mouseDragged){
+    //     stroke(0)
+    //     strokeWeight(10)
+    //     line(cueBall.body.position.x,cueBall.body.position.y,mouseX, mouseY)
+    // }
+
+    if(cueBall.body.speed < 0.2){
+        push()
+        stroke(0)
+        strokeWeight(5)
+        line(cueBall.body.position.x, cueBall.body.position.y, mouseX, mouseY)
+        // translate(cueBall.body.position.x, cueBall.body.position.y)
+        // let x = mouseX - cueBall.body.position.x;
+        // let y = mouseY - cueBall.body.position.y;
+        // let a = atan2(y,x);
+        // rotate(a)
+        // line(0,0,50,10)
+ 
+        pop()
+    }
+
 }
 
 function tableTexture()
@@ -235,22 +258,44 @@ function drawVertices(vertices)
 }
 
 function keyPressed(){
-    // Press "A"
-    // if(keyCode === "65"){
-    //     cue.updateCueAngle(-10)
-    // }
-    // if(keyCode === "D"){
-    //     cue.updateCueAngle(10)
-    // }
+
     if(key === "a"){
-        cue.updateCueAngle(-10)
+        cueBall.moveCueBall(mouseX,mouseY)
     }
-    if(key === "d"){
-        cue.updateCueAngle(10)
+
     }
-    if(key==" ")
-    {
-        // placingCueBall(mouseConstraint)
-        console.log("space is pressed")
-    }
+
+function mousePressed()
+{
+    // cueBall.shootCueBall(1000,mouseX,mouseY)
+    // cueBall.shootCueBall();
+    // apply force to cue ball
+    // research other ways to apply force
+    // limit the force so it is not too large
+
+    var force = 20;
+    var forceX = (cueBall.body.position.x - mouseX)/force;
+    var forceY = (cueBall.body.position.y - mouseY)/force;
+    var appliedForce = {x: forceX, y:forceY}; // vector
+    cueBall.shootCueBall(appliedForce)
+    print(forceX,forceY);
+    // Matter.Body.applyForce(cueBall,{x:cueBall.body.position.x, y: cueBall.body.position.y}, appliedForce);
+
+    // stroke(0)
+    // strokeWeight(100)
+    // console.log(cueBall.body.position.x, cueBall.body.position.y)
+    // console.log(mouseX, mouseY)
+    // line(cueBall.body.position.x,cueBall.body.position.y,mouseX, mouseY)
+
+
+
+    // return true
+
+
+    // var force = 1000;
+    // var forceX = (cueBall.body.position.x - mouseX)/force;
+    // var forceY = (cueBall.body.position.y - mouseY)/force;
+    // var appliedForce = {x: forceX, y:forceY}; // vector
+    // print(forceX,forceY);
+    // Body.applyForce(cueBall,{x:cueBall.body.position.x, y: cueBall.body.position.y}, appliedForce);
 }

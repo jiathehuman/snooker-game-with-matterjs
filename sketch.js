@@ -45,7 +45,7 @@ function setup()
 
 
     cueBall = new CueBall(width/2,height/2,ball_diameter/2)
-    cue = new Cue(width/2,100,10,200);
+    // cue = new Cue(width/2,100,10,200);
 
 
     // //https://www.youtube.com/watch?v=CdBXmsrkaPs&list=PLRqwX-V7Uu6bLh3T_4wtrmVHOrOEM1ig_&index=9
@@ -163,7 +163,7 @@ function draw()
     if(cueBall){
         cueBall.show()
     }
-    cue.show()
+    // cue.show()
     // cue.updateCuePosition(mouseX,mouseY)
     for(var i = 0; i < redBalls.length; i++){
         redBalls[i].show();
@@ -184,7 +184,6 @@ function draw()
             var obj = colouredBalls[i].removeBall()
             World.remove(engine.world, colouredBalls[i].body);
             colouredBalls.splice(i,1);
-            console.log(obj)
             holdingarray.push(obj)
             // console.log(Matter.Common.values(colouredBalls[i]))
             i--;
@@ -260,7 +259,17 @@ function drawVertices(vertices)
 function keyPressed(){
 
     if(key === "a"){
-        cueBall.moveCueBall(mouseX,mouseY)
+        for(var i = 0; i < colouredBalls.length; i++)
+        {
+            var x = colouredBalls[i].body.position.x
+            var y = colouredBalls[i].body.position.x
+            if((dist(mouseX,mouseY,x,y)) < (ball_diameter*2))
+            {
+                console.log("yes")
+            }
+        }
+        // console.log(colouredBalls)
+        // cueBall.moveCueBall(mouseX,mouseY)
     }
 
     }

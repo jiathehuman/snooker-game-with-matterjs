@@ -31,7 +31,7 @@ function gameModeOne()
     // }  
     
 
-    cue = new Cue(width/2,100,10,200);
+    // cue = new Cue(width/2,100,10,200);
     cueBall = new CueBall( 0 + 2* ball_diameter,0 + 2 * ball_diameter,ball_diameter/2)
 
     // red balls
@@ -74,7 +74,7 @@ function gameModeTwo()
     //     pockets.push(p1,p2)
     // }  
 
-    cue = new Cue(width/2,100,10,200);
+    // cue = new Cue(width/2,100,10,200);
     cueBall = new CueBall( 0 + 2* ball_diameter,0 + 2 * ball_diameter,ball_diameter/2)
 
     for(var i = 0; i < 16; i++)
@@ -103,7 +103,7 @@ function gameModeThree()
     // }  
     
 
-    cue = new Cue(width/2,50,ball_diameter/2);
+    // cue = new Cue(width/2,50,ball_diameter/2);
     cueBall = new CueBall( 0 + 2* ball_diameter,0 + 2 * ball_diameter,ball_diameter/2)
 
     for(var i = 0; i < 16; i++)

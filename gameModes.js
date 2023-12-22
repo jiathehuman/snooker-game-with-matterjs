@@ -11,9 +11,18 @@
 //     ellipse(i*width/2,0,ball_diameter*1.5,ball_diameter*1.5)
 //     ellipse(i*width/2,height,ball_diameter*1.5,ball_diameter*1.5)
 // }  
+function gameStart()
+{
+    gameMode = 0;
+    boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
+    boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
+    boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
+    boundaries.push(new Boundary(width/2,height,width,20)); // bottom boundary
+}
 
 function gameModeOne()
 {
+    gameMode = 1;
     removeAllBodies()
 
     addMouseConstraint()
@@ -32,7 +41,7 @@ function gameModeOne()
     
 
     // cue = new Cue(width/2,100,10,200);
-    cueBall = new CueBall( 0 + 2* ball_diameter,0 + 2 * ball_diameter,ball_diameter/2)
+    cueBall = new CueBall(width/2, 0 + height/2 - 100,ball_diameter/2)
 
     // red balls
     for(var j = 0; j < 5; j++) // columns
@@ -60,8 +69,9 @@ function gameModeOne()
 
 function gameModeTwo()
 {
-    removeAllBodies()
-    addMouseConstraint()
+    gameMode = 2;
+    removeAllBodies();
+    addMouseConstraint();
     boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
     boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
     boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
@@ -88,6 +98,7 @@ function gameModeTwo()
 
 function gameModeThree()
 {
+    gameMode = 3;
     removeAllBodies()
     // addMouseConstraint()
     boundaries.push(new Boundary(0,height/2,20,height)); // left boundary

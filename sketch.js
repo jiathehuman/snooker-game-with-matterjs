@@ -17,6 +17,9 @@ var defaultCategory = 0x0001, redCategory = 0x0002
 var greenCategory = 0x0004
 var blueCategory = 0x0008;
 
+var gameMode
+
+
 var p1_count = 0
 var p2_count = 0
 var p3_count = 0
@@ -44,7 +47,8 @@ function setup()
     // pockets = new Pockets();
     holdingarray = [];
 
-    cueBall = new CueBall(width/2,height/2,ball_diameter/2)
+    gameStart();
+    // cueBall = new CueBall(width/2,height/2,ball_diameter/2)
     // cue = new Cue(width/2,100,10,200);
 
 
@@ -214,7 +218,7 @@ function draw()
     //     line(cueBall.body.position.x,cueBall.body.position.y,mouseX, mouseY)
     // }
 
-    if(cueBall.body.speed < 0.2){
+    if(gameMode != 0 && cueBall.body.speed < 0.2){
         push()
         stroke(0)
         strokeWeight(5)
@@ -261,21 +265,36 @@ function drawVertices(vertices)
 
 function keyPressed(){
 
-    if(key === "a"){
-        for(var i = 0; i < colouredBalls.length; i++)
+    if(key == "a"){
+        var canMove = true;
+        for(var i = 0; i < engine.world.bodies.length; i++)
         {
-            var x = colouredBalls[i].body.position.x
-            var y = colouredBalls[i].body.position.x
-            if((dist(mouseX,mouseY,x,y)) < (ball_diameter*2))
+            if(engine.world.bodies[i].label == 'ball')
             {
-                console.log("yes")
+                var body = engine.world.bodies[i]
+                var x = body.position.x
+                var y = body.position.y
+
+                if((dist(x,y,mouseX,mouseY)) < (ball_diameter + 15))
+                {
+                    console.log("too near a ball")
+                    canMove = false;
+                    break;
+                }
+                
             }
         }
-        // console.log(colouredBalls)
-        // cueBall.moveCueBall(mouseX,mouseY)
+
+
+        if(canMove)
+        {
+            console.log("Can move ball");
+            cueBall.moveCueBall(mouseX,mouseY);
+        }
     }
 
-    }
+}
+
 
 function mousePressed()
 {
@@ -284,13 +303,17 @@ function mousePressed()
     // apply force to cue ball
     // research other ways to apply force
     // limit the force so it is not too large
+    
+    if(mouseX < width && mouseY < height)
+    {
+        var force = 20;
+        var forceX = (cueBall.body.position.x - mouseX)/force;
+        var forceY = (cueBall.body.position.y - mouseY)/force;
+        var appliedForce = {x: forceX, y:forceY}; // vector
+        cueBall.shootCueBall(appliedForce)
+        print(forceX,forceY);
+    }
 
-    var force = 20;
-    var forceX = (cueBall.body.position.x - mouseX)/force;
-    var forceY = (cueBall.body.position.y - mouseY)/force;
-    var appliedForce = {x: forceX, y:forceY}; // vector
-    cueBall.shootCueBall(appliedForce)
-    print(forceX,forceY);
     // Matter.Body.applyForce(cueBall,{x:cueBall.body.position.x, y: cueBall.body.position.y}, appliedForce);
 
     // stroke(0)

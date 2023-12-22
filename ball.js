@@ -61,8 +61,8 @@ class Ball{
         this.options = {
             friction:0.02,
             restitution: 1,
-            isStatic: false,
-            collisionFilter: {category :blueCategory},
+            isStatic: false
+            // collisionFilter: {category :blueCategory},
         }
         this.originalx = x
         this.originaly = y
@@ -85,7 +85,16 @@ class Ball{
         strokeWeight(2)
         stroke(0)
         fill(this.color);
+  
         ellipse(0,0,this.r*2);
+
+        fill(255,255,255,100);
+        noStroke()
+        ellipse(-5,-5,this.r*0.5);
+
+        fill(0,0,0,80);
+        ellipse(5,8,8,5)
+
         pop();
     }
     checkPocketed()

@@ -10,6 +10,7 @@ const {Engine, World, Bodies, Body, Mouse, MouseConstraint, Query, Constraint, C
 
 var engine;
 var cueBall;
+var playerTwo;
 var walls;
 var redBalls;
 var backgroundisDrawn;
@@ -56,8 +57,6 @@ function setup()
 
     gameStart();
 
-
-
     // //https://www.youtube.com/watch?v=CdBXmsrkaPs&list=PLRqwX-V7Uu6bLh3T_4wtrmVHOrOEM1ig_&index=9
     Events.on(engine, 'collisionStart', collisionStart);
     Events.on(engine, 'collisionActive', collisionActive);
@@ -98,9 +97,16 @@ function setup()
     buttonThree.mousePressed(()=>{
         gameModeThree()
     })
+    let buttonFour = createButton('Game Mode Four');
+    buttonFour.mousePressed(()=>{
+        gameModeFour()
+    })
+
     buttonOne.parent("gameMode-buttons")
     buttonTwo.parent("gameMode-buttons")
     buttonThree.parent("gameMode-buttons")
+    buttonFour.parent("gameMode-buttons")
+
 
 
     slider = createSlider(15,40,30);
@@ -151,6 +157,9 @@ function draw()
         if(cueBall.checkPocketed()){
             cueBall.returnCueBall();
         }
+    }
+    if(gameMode == 4){
+        playerTwo.show()
     }
     // cue.show()
     // cue.updateCuePosition(mouseX,mouseY)
@@ -240,7 +249,7 @@ function drawVertices(vertices)
 
 function keyPressed(){
 
-    if(key == "a"){
+    if(key == " "){
         var canMove = true;
         for(var i = 0; i < engine.world.bodies.length; i++)
         {
@@ -265,6 +274,14 @@ function keyPressed(){
         {
             console.log("Can move ball");
             cueBall.moveCueBall(mouseX,mouseY);
+        }
+    }
+
+    if(gameMode == 4)
+    {
+        if(key == "a")
+        {
+            playerTwo.updateAngle(PI/4)
         }
     }
 

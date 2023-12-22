@@ -63,7 +63,7 @@ class CueBall
             friction:0.03,
             restitution: 0.85,
             isStatic: false,
-            collisionFilter: {category:redCategory | greenCategory},
+            // collisionFilter: {category:redCategory | greenCategory},
             mass: 1
         }
         this.body = Bodies.circle(x, y, r, this.options);

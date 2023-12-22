@@ -137,6 +137,45 @@ function gameModeThree()
     colouredBalls.push(new Ball(random(0,width), random(0,height),ball_diameter/2,'black'))
 }
 
+function gameModeFour()
+{
+    gameMode = 4;
+    removeAllBodies()
+
+    // addMouseConstraint()
+    boundaries.push(new Boundary(0,height/2,40,height)); // left boundary
+    boundaries.push(new Boundary(width/2,0,width,40)); // top boundary
+    boundaries.push(new Boundary(width,height/2,40,height)); // right boundary
+    boundaries.push(new Boundary(width/2,height,width,40)); // bottom boundary
+
+
+    cueBall = new CueBall(width/2, 0 + height/2 - 100,ball_diameter/2)
+    playerTwo = new PlayerTwo(width/2, height/2 - 50, 100,20)
+
+    // red balls
+    for(var j = 0; j < 5; j++) // columns
+    {
+        var x = width * 0.7 + j * (ball_diameter + 5) // each column
+        var starty = height/2 - j * ball_diameter/2
+
+        var numBalls = j + 1;
+
+        for(var i = 0; i < numBalls; i++) //columns
+        {
+            var y = starty + i * ball_diameter + 5
+            var ball = new Ball(x,y,ball_diameter/2,'red')
+            redBalls.push(ball)
+        }
+    }
+    // coloured balls
+    colouredBalls.push(new Ball(width* 0.7 - ball_diameter * 3, height/2,ball_diameter/2,'pink'))
+    colouredBalls.push(new Ball(width/5, height/2 - 2.5*ball_diameter,ball_diameter/2,'green'))
+    colouredBalls.push(new Ball(width/5, height/2,ball_diameter/2,'brown'))
+    colouredBalls.push(new Ball(width/5, height/2 + 2.5*ball_diameter,ball_diameter/2,'yellow'))
+    colouredBalls.push(new Ball(width/2, height/2,ball_diameter/2,'blue'))
+    colouredBalls.push(new Ball(width - ball_diameter * 2, height/2,ball_diameter/2,'black'))
+}
+
 function removeAllBodies()
 {
     // engine.world.bodies.forEach((body)=>{

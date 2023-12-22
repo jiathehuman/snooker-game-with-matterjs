@@ -28,6 +28,7 @@ function setup()
 {
     background(50,100,50);
     const canvas = createCanvas(1200, 600);
+    canvas.parent("canvasContainer")
     backgroundCanvas= createGraphics(1200,600)
     tableTexture() // creates the texture of the table
 
@@ -42,7 +43,6 @@ function setup()
     boundaries = [];
     // pockets = new Pockets();
     holdingarray = [];
-
 
     cueBall = new CueBall(width/2,height/2,ball_diameter/2)
     // cue = new Cue(width/2,100,10,200);
@@ -99,20 +99,23 @@ function setup()
 
 
     let buttonOne = createButton('Game Mode One');
-    buttonOne.position(0, height)
+    // buttonOne.position(0, height)
     buttonOne.mousePressed(()=>{
         gameModeOne()
     })
     let buttonTwo = createButton('Game Mode Two');
-    buttonTwo.position(0, height + 50)
+    // buttonTwo.position(0, height + 50)
     buttonTwo.mousePressed(()=>{
         gameModeTwo()
     })
     let buttonThree = createButton('Game Mode Three');
-    buttonThree.position(0, height+ 100)
+    // buttonThree.position(0, height+ 100)
     buttonThree.mousePressed(()=>{
         gameModeThree()
     })
+    buttonOne.parent("controls")
+    buttonTwo.parent("controls")
+    buttonThree.parent("controls")
 
 
 }

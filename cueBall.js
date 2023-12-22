@@ -60,14 +60,17 @@ class CueBall
 {
     constructor(x, y, r){
         this.options = {
-            friction:0.1,
-            restitution: 0.2,
-            density: 10,
+            friction:0.03,
+            restitution: 0.85,
             isStatic: false,
             collisionFilter: {category:redCategory | greenCategory},
+            mass: 1
         }
         this.body = Bodies.circle(x, y, r, this.options);
         this.body.label = "cueBall"; // overrides label
+        this.body.description = "cueBall"
+        this.originalx = x
+        this.originaly = y
         this.r = r
         World.add(engine.world, this.body);    
     }
@@ -93,12 +96,29 @@ class CueBall
         }
     }
 
+
+    checkPocketed()
+    {
+        var pos = this.body.position;
+        var string = checkPocketed(pos.x,pos.y)
+        if(string != false){
+            return true
+        }
+    }
+
     moveCueBall(mouse_x, mouse_y)
     {
         //new
         // var query = Matter.Query.point(engine.bodies,{x: mouse_x, y: mouse_y})
         // console.log(query)
         Matter.Body.set(this.body, "position",{x: mouse_x, y: mouse_y})
+    }
+
+    returnCueBall()
+    {
+        Matter.Body.setStatic(this.body, true)
+        Matter.Body.set(this.body, "position",{x: this.originalx, y: this.originaly})
+        Matter.Body.setStatic(this.body, false)
     }
 
 }

@@ -52,18 +52,78 @@
 
 function collisionStart(event)
 {
-// console.log("a collision started")
+    var pairs = event.pairs;
+    // var collided_object
+    for(var i = 0; i < pairs.length; i++)
+    {
+        var pair = pairs[i]
+        var bodyA = pair.bodyA
+        var bodyB = pair.bodyB
+        var bodyALabel = bodyA.label;
+        var bodyBLabel = bodyB.label;
+
+        if(bodyALabel == "cueBall")
+        {
+            console.log(bodyB.description)
+            collided_object = bodyB.description
+        }
+        if(bodyBLabel == "cueBall")
+        {
+            console.log(bodyA.description)
+            collided_object = bodyA.description
+        }
+    }
+    fill(255)
+    noStroke()
+    textSize(20)
+    // console.log(collided_object)
 }
 
 function collisionActive(event)
 {
 // console.log("a collision is active")
+    //    var pairs = event.pairs;
+    //    for(var i = 0; i < pairs.length; i++)
+    //    {
+    //        var bodyA = pairs[i].bodyA
+    //        var bodyB = pairs[i].bodyB
+    //        var bodyALabel = bodyA.label;
+    //        var bodyBLabel = bodyB.label;
+
+    //        if(bodyALabel || bodyBLabel == "cueBall")
+    //        {
+    //         console.log("cueball is colliding")
+    //        }
+    //    }
 }
 
 function collisionEnd(event)
 {
     // console.log("collision ended")
-}
 
+//     var pairs = event.pairs;
+//     var collided_object
+//     for(var i = 0; i < pairs.length; i++)
+//     {
+//         var bodyA = pairs[i].bodyA
+//         var bodyB = pairs[i].bodyB
+//         var bodyALabel = bodyA.label;
+//         var bodyBLabel = bodyB.label;
+
+//         if(bodyALabel == "cueBall")
+//         {
+//          collided_object = bodyB.description
+//         }
+//         if(bodyBLabel == "cueBall")
+//         {
+//          collided_object = bodyA.description
+//         }
+//     }
+//     fill(255)
+//     noStroke()
+//     textSize(20)
+//     console.log(collided_object)
+// }
+}
 
    

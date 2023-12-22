@@ -1,9 +1,12 @@
 /*-------------------------------------------------------
 // GAME MODE
 // There should be three modes for the game:
-    1. Starting positions
+    1. Starting position in classic mode
     2. Random positions with only reds
     3. Random positions with both reds and coloured balls
+
+As an extension, I will be adding a fourth mode:
+- Player 2 added, playing concurrently to 'disturb' Player 1
 ---------------------------------------------------------*/
 
 // for(var i = 0; i < 3; i++)
@@ -14,10 +17,10 @@
 function gameStart()
 {
     gameMode = 0;
-    boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
-    boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
-    boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
-    boundaries.push(new Boundary(width/2,height,width,20)); // bottom boundary
+    boundaries.push(new Boundary(0,height/2,40,height)); // left boundary
+    boundaries.push(new Boundary(width/2,0,width,40)); // top boundary
+    boundaries.push(new Boundary(width,height/2,40,height)); // right boundary
+    boundaries.push(new Boundary(width/2,height,width,40)); // bottom boundary
 }
 
 function gameModeOne()
@@ -25,11 +28,11 @@ function gameModeOne()
     gameMode = 1;
     removeAllBodies()
 
-    addMouseConstraint()
-    boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
-    boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
-    boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
-    boundaries.push(new Boundary(width/2,height,width,20)); // bottom boundary
+    // addMouseConstraint()
+    boundaries.push(new Boundary(0,height/2,40,height)); // left boundary
+    boundaries.push(new Boundary(width/2,0,width,40)); // top boundary
+    boundaries.push(new Boundary(width,height/2,40,height)); // right boundary
+    boundaries.push(new Boundary(width/2,height,width,40)); // bottom boundary
 
 
     // for(var i = 0; i < 3; i++)
@@ -63,7 +66,7 @@ function gameModeOne()
     colouredBalls.push(new Ball(width/5, height/2 - 2.5*ball_diameter,ball_diameter/2,'green'))
     colouredBalls.push(new Ball(width/5, height/2,ball_diameter/2,'brown'))
     colouredBalls.push(new Ball(width/5, height/2 + 2.5*ball_diameter,ball_diameter/2,'yellow'))
-    colouredBalls.push(new Ball(width/2 + 10, height/2,ball_diameter/2,'blue'))
+    colouredBalls.push(new Ball(width/2, height/2,ball_diameter/2,'blue'))
     colouredBalls.push(new Ball(width - ball_diameter * 2, height/2,ball_diameter/2,'black'))
 }
 
@@ -71,11 +74,11 @@ function gameModeTwo()
 {
     gameMode = 2;
     removeAllBodies();
-    addMouseConstraint();
-    boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
-    boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
-    boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
-    boundaries.push(new Boundary(width/2,height,width,20)); // bottom boundary
+    // addMouseConstraint();
+    boundaries.push(new Boundary(0,height/2,40,height)); // left boundary
+    boundaries.push(new Boundary(width/2,0,width,40)); // top boundary
+    boundaries.push(new Boundary(width,height/2,40,height)); // right boundary
+    boundaries.push(new Boundary(width/2,height,width,40)); // bottom boundary
     
     // for(var i = 0; i < 3; i++)
     // {
@@ -101,10 +104,10 @@ function gameModeThree()
     gameMode = 3;
     removeAllBodies()
     // addMouseConstraint()
-    boundaries.push(new Boundary(0,height/2,20,height)); // left boundary
-    boundaries.push(new Boundary(width/2,0,width,20)); // top boundary
-    boundaries.push(new Boundary(width,height/2,20,height)); // right boundary
-    boundaries.push(new Boundary(width/2,height,width,20)); // bottom boundary
+    boundaries.push(new Boundary(0,height/2,40,height)); // left boundary
+    boundaries.push(new Boundary(width/2,0,width,40)); // top boundary
+    boundaries.push(new Boundary(width,height/2,40,height)); // right boundary
+    boundaries.push(new Boundary(width/2,height,width,40)); // bottom boundary
 
     // for(var i = 0; i < 3; i++)
     // {

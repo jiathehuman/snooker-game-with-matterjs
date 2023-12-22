@@ -22,11 +22,20 @@ body{
     background-color: #141111;
 }
 
+div #gameMode-buttons{
+    column-width: 30%;
+}
+
+div #force-control{
+    padding:1%
+}
+
 li{
     font-size: 1.4em;
     line-height: 2.333em;
     margin-left: 2%;
 }
+
 
 #controls{
     margin-left: 1%;
@@ -59,3 +68,24 @@ button{
 button:hover{
     background-color: rgb(186, 186, 255);
 }
+
+input{
+    margin-left: 5%;
+    height: 10px;
+    width:300px;
+    -webkit-appearance: none;
+    border-radius: 12px;
+    outline:none;
+    background-color: rgb(186, 186, 255);
+    cursor: pointer;
+}
+
+input::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width:20px;
+    height:20px;
+    background-color: white;
+    cursor: pointer;
+}
+
+

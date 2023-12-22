@@ -59,7 +59,7 @@
 class Ball{
     constructor(x,y,r,color){
         this.options = {
-            friction:0.1,
+            friction:0.02,
             restitution: 1,
             isStatic: false,
             collisionFilter: {category :blueCategory},
@@ -69,6 +69,8 @@ class Ball{
 
         this.body = Bodies.circle(x, y, r, this.options);
         this.body.label = "ball"; // overrides label
+        this.body.description = color + " ball"
+
         this.r = r;
         this.color = color
         World.add(engine.world, this.body);
@@ -96,14 +98,24 @@ class Ball{
     }
     removeBall()
     {
-        var obj = {
-            x: this.originalx,
-            y: this.originaly,
-            color: this.color,
-            options: this.options
+
+        if(this.color != "red") // it is a coloured ball
+        {
+            Matter.Body.setStatic(this.body, true)
+            Matter.Body.set(this.body, "position",{x: this.originalx, y: this.originaly})
+            Matter.Body.setStatic(this.body, false)
         }
-        World.remove(engine.world, this.body);
-        return obj
+        // var obj = {
+        //     x: this.originalx,
+        //     y: this.originaly,
+        //     color: this.color,
+        //     options: this.options
+        // }
+        else{
+            World.remove(engine.world, this.body);
+        }
+
+        // return obj
     }
     checkPosition()
     {

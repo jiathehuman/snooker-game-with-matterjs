@@ -18,6 +18,7 @@ var greenCategory = 0x0004
 var blueCategory = 0x0008;
 
 var gameMode
+var collided_object
 
 
 var p1_count = 0
@@ -27,13 +28,20 @@ var p4_count = 0
 var p5_count = 0
 var p6_count = 0
 
+var score = 0;
+
+function preload()
+{
+    bg = loadImage("assets/gp_midterms_bg.png");
+}
 function setup() 
 {
-    background(50,100,50);
+    // background(50,100,50);
+
     const canvas = createCanvas(1200, 600);
     canvas.parent("canvasContainer")
-    backgroundCanvas= createGraphics(1200,600)
-    tableTexture() // creates the texture of the table
+    // backgroundCanvas= createGraphics(1200,600)
+    // tableTexture() // creates the texture of the table
 
 
     engine = Engine.create();
@@ -44,12 +52,10 @@ function setup()
     redBalls = [];
     colouredBalls = []
     boundaries = [];
-    // pockets = new Pockets();
     holdingarray = [];
 
     gameStart();
-    // cueBall = new CueBall(width/2,height/2,ball_diameter/2)
-    // cue = new Cue(width/2,100,10,200);
+
 
 
     // //https://www.youtube.com/watch?v=CdBXmsrkaPs&list=PLRqwX-V7Uu6bLh3T_4wtrmVHOrOEM1ig_&index=9
@@ -71,28 +77,6 @@ function setup()
     //     }
     // });
 
-    // var mouse = Mouse.create(canvas.elt),
-    // mouseConstraint = MouseConstraint.create(engine, {
-    //     mouse: mouse,
-    //     // collisionFilter: redCategory,
-    //     constraint: {
-    //         stiffness: 0.2,
-    //         // collisionFilter: {category: redCategory},
-    //     }
-    // });
-    // World.add(engine.world, mouseConstraint);
-
-    // Events.on(mouseConstraint, 'mousedown', function(event) {
-    //     // console.log('mousedown', event);
-    //     // console.log(event)
-    //     console.log(event.mouse.position)
-    // });
-
-    // Events.on(mouseConstraint, 'mouseup', function(event) {
-    //     // console.log('mousedown', event);
-    //     console.log(event.mouse.position)
-    // });
-
 
 
     // events = new Events(Events)
@@ -103,34 +87,36 @@ function setup()
 
 
     let buttonOne = createButton('Game Mode One');
-    // buttonOne.position(0, height)
     buttonOne.mousePressed(()=>{
         gameModeOne()
     })
     let buttonTwo = createButton('Game Mode Two');
-    // buttonTwo.position(0, height + 50)
     buttonTwo.mousePressed(()=>{
         gameModeTwo()
     })
     let buttonThree = createButton('Game Mode Three');
-    // buttonThree.position(0, height+ 100)
     buttonThree.mousePressed(()=>{
         gameModeThree()
     })
-    buttonOne.parent("controls")
-    buttonTwo.parent("controls")
-    buttonThree.parent("controls")
+    buttonOne.parent("gameMode-buttons")
+    buttonTwo.parent("gameMode-buttons")
+    buttonThree.parent("gameMode-buttons")
 
 
+    slider = createSlider(15,40,30);
+    slider.parent("force-control");
 }
 
 function draw() 
 {
-
+    background(bg)
     Engine.update(engine);
     // engine.enableSleeping = true;
 
-    background(50,100,50);
+    force = slider.value();
+
+//    image(backgroundCanvas,0,0) 
+    // background(50,100,50);
         // markings on the pool table
     stroke(255);
     strokeWeight(5);
@@ -138,37 +124,33 @@ function draw()
     noFill();
     arc(width/5,height/2,width/6,ball_diameter*5,HALF_PI, PI + HALF_PI,PIE);
 
+    stroke(255);
+    fill(255)
+    noStroke();
+    textSize(16)
+    if(collided_object){
+        text("Cue ball last collided with : " + collided_object, width - 280, height - 50)
+    }
+    textSize(20)
+    text("Force to be applied is : " + force, width - 280, height - 30)    
+
+    text("Current score is: " + score, width - 200, 50)
+
     fill(0) 
     noStroke()
 
     for(var i = 0; i < 3; i++)
     {
         fill(0)
-        ellipse(i*width/2,0,ball_diameter*1.5,ball_diameter*1.5)
-        ellipse(i*width/2,height,ball_diameter*1.5,ball_diameter*1.5)
+        ellipse(i*width/2,0,ball_diameter*2)
+        ellipse(i*width/2,height,ball_diameter*2)
     }  
-    // for(var i = 0; i < pockets.length; i++)
-    // {
-    //     pockets[i].show();
-    //     // collisions = Query.collides(pockets[i].body);
-    //     // console.log(collisions)
-    // }
-
-
-    // image(backgroundCanvas,0,0) 
-
-    // if(mConstraint.body){
-    //     var pos = mConstraint.body.position;
-    //     var m = mConstraint.mouse.position;
-    //     stroke(0,255,0);
-    //     line(pos.x, pos.y, m.x, m.y)
-    // }
-
-    // cue.changeAngle(140)
-
-    // gameModeOne()
+    
     if(cueBall){
         cueBall.show()
+        if(cueBall.checkPocketed()){
+            cueBall.returnCueBall();
+        }
     }
     // cue.show()
     // cue.updateCuePosition(mouseX,mouseY)
@@ -176,24 +158,27 @@ function draw()
         redBalls[i].show();
         if(redBalls[i].checkPocketed())
         {
-            var obj = redBalls[i].removeBall()
-            console.log(obj)
+            redBalls[i].removeBall()
             redBalls.splice(i,1);
+            score++;
             i--;
         }
 
     }
+
     for(var i = 0; i < colouredBalls.length; i++){
         colouredBalls[i].show();
         if(colouredBalls[i].checkPocketed())
         {
-            console.log("yes")
-            var obj = colouredBalls[i].removeBall()
-            World.remove(engine.world, colouredBalls[i].body);
-            colouredBalls.splice(i,1);
-            holdingarray.push(obj)
-            // console.log(Matter.Common.values(colouredBalls[i]))
-            i--;
+            switch(colouredBalls[i].color){
+                case "yellow": score += 2;
+                case "green": score += 3;
+                case "brown": score += 4;
+                case "blue": score += 5;
+                case "pink": score += 6;
+                case "black": score += 7;
+            }
+            colouredBalls[i].removeBall()
         }
     };
 
@@ -204,6 +189,7 @@ function draw()
 
     if((p1_count || p2_count || p3_count || p4_count || p5_count || p6_count) > 1)
     {
+        alert("two balls fell into the same pocket!")
         p1_count = 0
         p2_count = 0
         p3_count = 0
@@ -212,41 +198,30 @@ function draw()
         p6_count = 0
     }
 
-    // if(mouseDragged){
-    //     stroke(0)
-    //     strokeWeight(10)
-    //     line(cueBall.body.position.x,cueBall.body.position.y,mouseX, mouseY)
-    // }
-
     if(gameMode != 0 && cueBall.body.speed < 0.2){
         push()
         stroke(0)
         strokeWeight(5)
         line(cueBall.body.position.x, cueBall.body.position.y, mouseX, mouseY)
-        // translate(cueBall.body.position.x, cueBall.body.position.y)
-        // let x = mouseX - cueBall.body.position.x;
-        // let y = mouseY - cueBall.body.position.y;
-        // let a = atan2(y,x);
-        // rotate(a)
-        // line(0,0,50,10)
  
         pop()
     }
 
 }
 
-function tableTexture()
-{
-    for(var i = 0; i < width; i++)
-    {
-        for(var j = 0; j < height; j++){
-            var n = noise(i,j);
-            var c = map(n, 0, 1, 50, 150);
-            backgroundCanvas.stroke(40,c,40);
-            backgroundCanvas.point(i,j);
-        }
-    }
-}
+// called function, and saved image as the background and loaded in preload
+// function tableTexture()
+// {
+//     for(var i = 0; i < width; i++)
+//     {
+//         for(var j = 0; j < height; j++){
+//             var n = noise(i,j);
+//             var c = map(n, 0, 1, 50, 150);
+//             backgroundCanvas.stroke(40,c,40);
+//             backgroundCanvas.point(i,j);
+//         }
+//     }
+// }
 
 
 /////////
@@ -286,7 +261,7 @@ function keyPressed(){
         }
 
 
-        if(canMove)
+        if(canMove && mouseX < width  && mouseY < height) // makes sure that ball is still in pool table
         {
             console.log("Can move ball");
             cueBall.moveCueBall(mouseX,mouseY);
@@ -298,39 +273,12 @@ function keyPressed(){
 
 function mousePressed()
 {
-    // cueBall.shootCueBall(1000,mouseX,mouseY)
-    // cueBall.shootCueBall();
-    // apply force to cue ball
-    // research other ways to apply force
-    // limit the force so it is not too large
-    
-    if(mouseX < width && mouseY < height)
+    if(!(mouseX < width && mouseY > height))
     {
-        var force = 20;
-        var forceX = (cueBall.body.position.x - mouseX)/force;
-        var forceY = (cueBall.body.position.y - mouseY)/force;
-        var appliedForce = {x: forceX, y:forceY}; // vector
-        cueBall.shootCueBall(appliedForce)
-        print(forceX,forceY);
+        var v1 = createVector(cueBall.body.position.x - mouseX, cueBall.body.position.y - mouseY);
+        v1.normalize();
+
+        v2 = v1.mult(force);
+        cueBall.shootCueBall(v2)
     }
-
-    // Matter.Body.applyForce(cueBall,{x:cueBall.body.position.x, y: cueBall.body.position.y}, appliedForce);
-
-    // stroke(0)
-    // strokeWeight(100)
-    // console.log(cueBall.body.position.x, cueBall.body.position.y)
-    // console.log(mouseX, mouseY)
-    // line(cueBall.body.position.x,cueBall.body.position.y,mouseX, mouseY)
-
-
-
-    // return true
-
-
-    // var force = 1000;
-    // var forceX = (cueBall.body.position.x - mouseX)/force;
-    // var forceY = (cueBall.body.position.y - mouseY)/force;
-    // var appliedForce = {x: forceX, y:forceY}; // vector
-    // print(forceX,forceY);
-    // Body.applyForce(cueBall,{x:cueBall.body.position.x, y: cueBall.body.position.y}, appliedForce);
 }
